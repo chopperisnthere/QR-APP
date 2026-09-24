@@ -4,7 +4,7 @@
     "slug": "QR-ATT",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/jip.png",
+    "icon": "./assets/images/drei.png",
     "scheme": "qr-attendance",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -13,14 +13,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FCE7E7",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.xaconic.QRATT"
+      "package": "com.drei.qratt"
     },
     "web": {
       "output": "static",
@@ -31,10 +31,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/jip.png",
+          "image": "./assets/images/drei.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#0f172a"
+          "backgroundColor": "#FFF9F7"
         }
       ],
       "expo-sqlite",
@@ -47,9 +47,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "c3f34f28-2042-4a25-a9e7-b0c60900d18b"
+        "projectId": "2dde05f6-93cb-4e52-9d67-85e2e7998f05"
       }
     },
-    "owner": "xaconic"
+    "owner": "dreikirigayas-team"
   }
 }

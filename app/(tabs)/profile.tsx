@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     flex: 1,
-    backgroundColor: '#F4F6F8',
+    backgroundColor: COLORS.background,
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   saveButtonText: {
-    color: '#fff',
+    color: COLORS.textOnPrimary,
     fontWeight: '600',
   },
   roleContainer: {
@@ -218,13 +218,13 @@ const styles = StyleSheet.create({
   },
   roleBadge: {
     alignSelf: 'flex-start',
-    backgroundColor: '#E8F0FE',
+    backgroundColor: COLORS.surface,
     borderRadius: 999,
     paddingHorizontal: 12,
     paddingVertical: 6,
   },
   roleBadgeStudent: {
-    backgroundColor: '#EAF7EE',
+    backgroundColor: COLORS.successSurface,
   },
   roleBadgeText: {
     color: COLORS.primary,

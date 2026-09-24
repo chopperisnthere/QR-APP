@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   successMessage: {
     fontSize: 14,
-    color: '#7ae7a4',
+    color: COLORS.success,
     textAlign: 'center',
     marginBottom: 18,
     fontWeight: '600',
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   error: {
     fontSize: 14,
-    color: '#C62828',
+    color: COLORS.danger,
     textAlign: 'center',
     marginTop: 12,
     marginBottom: 4,

@@ -196,13 +196,17 @@ export async function registerAttendance(
           title,
           start_time: payload.start ?? null,
           end_time: payload.end ?? null,
+          created_by: studentId,
         },
       ])
       .select('id, title')
       .single();
 
     if (insertError) {
-      return { success: false, message: 'Could not create event.' };
+      return {
+        success: false,
+        message: `Could not create event: ${insertError.message}`,
+      };
     }
 
     event = newEvent;

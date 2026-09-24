@@ -1,11 +1,12 @@
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import AppButton from '@/components/AppButton';
 import { COLORS } from '@/constants/colors';
 import { useAuth } from '@/lib/auth';
 import { registerAttendance } from '@/lib/attendance';
+import { parseQRPayload } from '@/lib/qr';
 
 export default function ScanScreen() {
   const { user } = useAuth();
@@ -14,6 +15,7 @@ export default function ScanScreen() {
   const [lastData, setLastData] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [isUrl, setIsUrl] = useState(false);
 
   if (!permission) {
     return <View style={styles.container} />;
@@ -39,11 +41,37 @@ export default function ScanScreen() {
   const handleBarcodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
     setLastData(data);
-    const studentId = user?.id ?? 'unknown';
+    setIsUrl(isHttpUrl(data));
+
+    const parsed = parseQRPayload(data);
+    if (!parsed.ok) {
+      setMessage('General QR code detected. No attendance was recorded.');
+      setSuccess(false);
+      return;
+    }
+
+    const studentId = user?.id;
+    if (!studentId) {
+      setMessage('You must be signed in to record attendance.');
+      setSuccess(false);
+      return;
+    }
+
     registerAttendance(data, studentId).then((result) => {
       setMessage(result.message);
       setSuccess(result.success);
+    }).catch(() => {
+      setMessage('Could not process this attendance QR code.');
+      setSuccess(false);
     });
+  };
+
+  const resetScanner = () => {
+    setScanned(false);
+    setLastData(null);
+    setMessage(null);
+    setSuccess(false);
+    setIsUrl(false);
   };
 
   return (
@@ -72,16 +100,24 @@ export default function ScanScreen() {
           <Text style={styles.scanData}>{lastData}</Text>
         )}
 
+        {scanned && isUrl && (
+          <AppButton
+            theme="primary"
+            title="Open Link"
+            icon="open-outline"
+            onPress={() => Linking.openURL(lastData!).catch(() => {
+              setMessage('Could not open this link.');
+              setSuccess(false);
+            })}
+          />
+        )}
+
         {scanned && (
           <AppButton
             theme="primary"
             title="Scan Again"
             icon="refresh"
-            onPress={() => {
-              setScanned(false);
-              setLastData(null);
-              setMessage(null);
-            }}
+            onPress={resetScanner}
           />
         )}
       </View>
@@ -131,7 +167,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   scanResult: { fontSize: 14, textAlign: 'center', marginBottom: 8, fontWeight: '600' },
-  success: { color: '#2E7D32' },
-  error: { color: '#C62828' },
+  success: { color: COLORS.success },
+  error: { color: COLORS.danger },
   scanData: { fontSize: 12, color: COLORS.textSecondary, textAlign: 'center', marginBottom: 12 },
 });
+
+function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}

@@ -1,4 +1,4 @@
-package com.xaconic.QRATT
+package com.drei.qratt
 
 import android.app.Application
 import android.content.res.Configuration

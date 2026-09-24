@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   qrBox: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.card,
     padding: 12,
     borderRadius: 10,
     marginBottom: 12,

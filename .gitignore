@@ -9,12 +9,17 @@ web-build/
 expo-env.d.ts
 
 # native
+android/build/
+android/app/build/
+android/.cxx/
+android/local.properties
 *.orig.*
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
+*.log
 
 # macOS
 .DS_Store
